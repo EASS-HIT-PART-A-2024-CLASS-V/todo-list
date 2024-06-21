@@ -2,7 +2,7 @@
 
 ## Overview
 
-This backend service is designed to manage a TODO list, allowing users to add tasks, retrieve a single task, or get the full list of tasks. It's built using FastAPI, a modern, fast (high-performance) web framework for building APIs with Python 3.7+.
+This backend service is designed to manage a TODO list, allowing users to add tasks, retrieve a single task, or get the full list of tasks. It's built using FastAPI, a modern, fast (high-performance) web framework for building APIs with Python.
 
 ## Features
 

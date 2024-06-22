@@ -1,9 +1,10 @@
 from Priority import Priority
 from pydantic import BaseModel
 from datetime import date
+from typing import Optional
 
 class Task(BaseModel):
-    id: int
+    id: Optional[int] = 0
     title: str
     description: str
     priority: Priority

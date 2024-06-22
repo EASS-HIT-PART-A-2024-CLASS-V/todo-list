@@ -1,8 +1,5 @@
-from typing import Optional
 from fastapi import FastAPI, HTTPException
-from datetime import date
 from Task import Task
-from Priority import Priority
 
 app = FastAPI()
 todos_local_storage = []
@@ -13,47 +10,56 @@ def get_full_todo_list():
     return todos_local_storage 
 
 
-@app.get("/todo/getsingletask", description="return a single task based on the task id")
-def get_single_task(id: int):
-    for task in todos_local_storage:
-        if task.id == id:
-            return task
-        
-    raise HTTPException(status_code=400, detail=f"No such task with id: {id}")
+@app.get("/todo/searchtasks", description="return a single task based on the task title")
+def search_tasks(title: str):
+    tasks_to_return = []
+    try:
+        for task in todos_local_storage:
+            if title.lower() in task.title.lower():
+                tasks_to_return.append(task)
+        return tasks_to_return
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/todo/addtask", description="add a single task to the TODO list")
-def add_task(title: str, description: str, priority: Priority, due_date: date):
+def add_task(task: Task):
     global tasks_id_counter
     try:
-        task = Task(id=tasks_id_counter, title=title, description=description, priority=priority, due_date=due_date)
+        task.id = tasks_id_counter
         todos_local_storage.append(task)
         tasks_id_counter += 1
         return task
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 
 @app.put("/todo/updatesingletask", description="update a single task based on the task id")
-def update_todo(id: int, title: Optional[str] = None, description: Optional[str] = None, priority: Optional[Priority] = None, due_date: Optional[date] = None):
+def update_todo(updated_task: Task):
     for task in todos_local_storage:
-        if task.id == id:
-            task.title = title if title is not None else task.title
-            task.description = description if description is not None else task.description
-            task.priority = priority if priority is not None else task.priority
-            task.due_date = due_date if due_date is not None else task.due_date
-            return task
+        if task.id == updated_task.id:
+            try:
+                task.title = updated_task.title if updated_task.title is not None else task.title
+                task.description = updated_task.description if updated_task.description is not None else task.description
+                task.priority = updated_task.priority if updated_task.priority is not None else task.priority
+                task.due_date = updated_task.due_date if updated_task.due_date is not None else task.due_date
+                return task
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=str(e))
     
-    raise HTTPException(status_code=400, detail=f"No such task with id: {id}")
+    raise HTTPException(status_code=400, detail=f"No such task with id: {updated_task.id}")
 
 
 @app.delete("/todo/deletesingletask", description="delete a single tasl from the list based on the task id")
 def remove_single_task(id: int):
     for task in todos_local_storage:
         if task.id == id:
-            todos_local_storage.remove(task)
-            raise HTTPException(status_code=200, detail=f"task {id} removed successfuly")
+            try:
+                todos_local_storage.remove(task)
+                return (f"task {id} removed successfuly")
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=str(e))
         
     raise HTTPException(status_code=400, detail=f"No such task with id: {id}")
 
@@ -62,6 +68,6 @@ def remove_single_task(id: int):
 def remove_all_list():
     try:
         todos_local_storage.clear()
-        raise HTTPException(status_code=200, detail=f"task list removed successfuly")
+        return (f"task list removed successfuly")
     except Exception as e:
         raise HTTPException(status_code=200, detail=str(e))

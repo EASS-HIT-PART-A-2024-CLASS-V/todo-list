@@ -33,23 +33,6 @@ Once the Docker containers are running, you can interact with the application in
 - The FastAPI backend is accessible through HTTP requests on `http://localhost:8080`.
 - The Streamlit frontend can be accessed by visiting `http://localhost:8501` in your web browser.
 
-## Tree
-
-├── README.md
-├── backend
-│   ├── Dockerfile
-│   ├── Priority.py
-│   ├── Task.py
-│   ├── main.py
-│   ├── requirements.txt
-│   └── test.py
-├── docker-compose.yaml
-└── frontend
-    ├── Dockerfile
-    ├── app.py
-    ├── requirements.txt
-    └── test.py
-
 ## Development
 
 This project uses FastAPI for the backend and Streamlit for the frontend. For more information on developing with FastAPI, visit the official [FastAPI documentation](https://fastapi.tiangolo.com/). For Streamlit development, refer to the [Streamlit documentation](https://docs.streamlit.io/).

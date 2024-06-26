@@ -1,8 +1,8 @@
-# TODO List Backend
+# TODO List
 
 ## Overview
 
-This backend service is designed to manage a TODO list, allowing users to add tasks, retrieve a single task, or get the full list of tasks. It's built using FastAPI, a modern, fast (high-performance) web framework for building APIs with Python.
+This project has been enhanced with additional features, including a new FastAPI service that interacts with a locally deployed MongoDB container. The application now comprises a backend service built with FastAPI for general operations, a second FastAPI service for MongoDB interactions, and a frontend interface developed using Streamlit.
 
 ## Features
 
@@ -15,21 +15,33 @@ and due date.
 
 ## Installation with Docker
 
-To set up the project using Docker, follow these steps:
+To set up the project using Docker, including the MongoDB container, follow these steps:
 
 1. Clone the repository to your local machine.
-2. Ensure you have Docker installed.
-3. Run `docker-compose up --build` in your terminal to build and start the containers.
+2. Ensure you have Docker and Docker Compose installed.
+3. Navigate to the project directory.
+4. Run `docker-compose up --build` in your terminal to build and start the containers, including the MongoDB container with its volume mounted to the `data` directory in your project.
 
-This will start the backend service and any other services defined in your `docker-compose.yaml` file.
-
-The docker-compose configuration will build the Docker image for your FastAPI application, mount the current directory to the container, and forward the container's port 80 to the host's port 8080.
+This setup will start all backend services, the MongoDB container, and the Streamlit frontend, and the backend FastAPI as defined in your `docker-compose.yaml` file.
 
 ## Usage
-Once the Docker container is running, you can interact with the API through HTTP requests on 'http://localhost:8080'.
+
+Once the Docker containers are up and running, you can interact with the application as follows:
+
+- The original FastAPI backend is accessible through HTTP requests on `http://localhost:8080`.
+- The new FastAPI service for MongoDB interactions is available on `http://localhost:8081`.
+- The Streamlit frontend can be accessed by visiting `http://localhost:8501` in your web browser.
+- The local MongoDB container can be accessed on `mongodb://localhost:27017`
 
 ## Development
-This project uses FastAPI. For more information on developing with FastAPI, visit the official FastAPI documentation.
+
+This project uses FastAPI for backend services, including interactions with MongoDB, and Streamlit for the frontend. For development:
+
+- Refer to the [FastAPI documentation](https://fastapi.tiangolo.com/) for backend development.
+- For MongoDB interaction, ensure familiarity with MongoDB operations and the FastAPI database library `pymongo`.
+- Visit the [Streamlit documentation](https://docs.streamlit.io/) for frontend development guidance.
+
+Remember to check the `docker-compose.yaml` file for service configurations and the `data` directory for MongoDB data persistence.
 
 ## Contributing
 Contributions are welcome! Please feel free to submit a pull request.

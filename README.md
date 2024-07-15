@@ -10,6 +10,7 @@ This project has been enhanced with additional features, including a new FastAPI
 - **Get Single Task**: Fetch a single task based on its unique ID.
 - **Add Task**: Add a new task to the TODO list with details such as title, description, priority, 
 and due date.
+- **Update Task**: Update old task details.
 - **Delete Single Task**: Delete a single task from your list.
 - **Delete TODO-List**: Delete entire TODO-List.
 
@@ -44,4 +45,5 @@ This project uses FastAPI for backend services, including interactions with Mong
 Remember to check the `docker-compose.yaml` file for service configurations and the `data` directory for MongoDB data persistence.
 
 ## Contributing
+
 Contributions are welcome! Please feel free to submit a pull request.

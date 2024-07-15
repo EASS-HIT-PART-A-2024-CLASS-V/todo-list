@@ -6,15 +6,16 @@ client = TestClient(app)
 
 def test_add_task():
     global task_json_for_tests
-    response = client.post("/todo/addtask?title=test&description=test&priority=3&due_date=2024-12-31")
+    response = client.post("/todo/addtask", json={"title": "test", "description": "test", "priority": "1", "due_date": "2024-12-30"})
     assert response.status_code == 200
     assert response.json()["title"] == "test"
 
 
-def test_get_single_task():
-    response = client.get("/todo/getsingletask?id=0")
+def test_search_tasks():
+    response = client.get("/todo/searchtasks?title=test")
     assert response.status_code == 200
-    assert response.json()["title"] == "test"
+    tasks = response.json()
+    assert any(task["title"] == "test" for task in tasks)
 
 
 def test_get_full_list():
@@ -23,7 +24,7 @@ def test_get_full_list():
 
 
 def test_update_task():
-    response = client.put("/todo/updatesingletask?id=0&priority=1&due_date=2024-12-30")
+    response = client.put("/todo/updatesingletask", json={"id": 0, "title": "test", "description": "test", "priority": "1", "due_date": "2024-12-30"})
     assert response.status_code == 200
     assert response.json()["priority"] == "1"
 

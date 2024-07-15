@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    environment:
+      DB_URL: http://db-api:8081
     networks: 
     - app-network
     ports:
@@ -20,6 +22,31 @@ services:
     ports:
       - "8501:8501"
     container_name: frontend-container
+  
+  db-api:
+    build:
+      context: .
+      dockerfile: db-api/Dockerfile
+    environment:
+      DB_URL: mongodb://mongo:27017/
+    networks: 
+    - app-network
+    ports:
+      - "8081:8081"
+    container_name: dbapi-container
+  
+  mongo:
+    image: mongo:latest
+    volumes:
+      - data:/data/db
+    networks:
+      - app-network
+    ports:
+      - "27017:27017"
+    container_name: mongo-container
+
+volumes:
+  data:
 
 networks:
   app-network:
